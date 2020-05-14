@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS host_info
   hostname VARCHAR NOT NULL,
   cpu_number INT NOT NULL,
   cpu_architecture VARCHAR NOT NULL, 
-  cup_model VARCHAR NOT NULL, cpu_mhz DECIMAL NOT NULL, 
+  cpu_model VARCHAR NOT NULL, cpu_mhz DECIMAL NOT NULL, 
   L2_cache INT NOT NULL, 
   total_mem INT NOT NULL, 
   timestamp TIMESTAMP NOT NULL, 
@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS host_usage
    disk_available INT NOT NULL,
    id INT NOT NULL,
    Primary key(host_id),
-   FOREIGN KEY (id) REFERENCES host_info(id))
+   FOREIGN KEY (id) REFERENCES host_info(id));

@@ -47,5 +47,19 @@ If container is already created then docker container will start
 `./psql_docker.sh [Stop] [db_username] [db_password]`
 Stops socker container
 ### ddl.sql
+Creates two Tables host_info and host_usage. 
+how to run the script:
+`./psql -h [hostname] -U [username] -p [port number] -c ddl.sql`
+### host_info.sh
+Collects all hardware specifications and inputs the values into ddl.sql
+how to run the script:
+`./host_info.sh [hostname] [database name] [username] [user password]`
+### host_usage.sh
+Collects all hardware specifications and inputs the values into ddl.sql
+how to run the script:
+`./host_usage.sh [hostname] [database name] [username] [user password]`
+
+
 ## Improvements 
 1) Combine host_info and host_usage into one table
+2) handle hardware updates 

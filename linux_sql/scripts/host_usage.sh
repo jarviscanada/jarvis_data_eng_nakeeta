@@ -25,4 +25,4 @@ VALUES ('"$timestamp"', '"$memory_free"','"$cpu_idle"','"$cpu_kernel"','"$disk_i
 # connect to PSQL instance
 psql -h $psql_host -p $psql_port -U $db_name -d $psql_user -W $psql_password -c "$in_state"
 
-exit 0
+exit $?

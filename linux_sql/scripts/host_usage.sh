@@ -9,22 +9,20 @@ export PGPASSWORD=$psql_password
 
 # parse host hardware specifications using bash cmds
 lscpu=`lscpu`
-vm= `vmstat`
-disk= `df`
+hostname=$(hostname -f)
+cpu_number=$(echo "$lscpu"  | egrep "^CPU\(s\):" | awk '{print $2}' | xargs)
+cpu_architecture=$(echo "$lscpu" | grep "Architecture:" | awk '{print $2}' | xargs)
+cpu_model=$(echo "$lscpu" | grep "Model\sname:"| awk -F ": " '{print $2}' | xargs)
+cpu_mhz=$(echo "$lscpu" | grep  "CPU\sMHz:"| awk -F ": " '{print $2}' | xargs )
+l2_cache=$(echo "$lscpu" | grep "L2\scache:" | egrep -o "[0-9]{2,}" |xargs)
+total_mem=$(cat /proc/meminfo | grep "MemTotal"| egrep -o "[0-9]{2,}" |xargs)
 timestamp=$(date '+%Y-%m-%d %T')
-memory_free=$(cat /proc/meminfo | grep "MemFree"| egrep -o "[0-9]{2,}"| xargs)
-cpu_idle=$(echo "$vm" -t | awk '{ print $15}' |tail -1 | xargs)
-cpu_kernel=$(echo "$vm" -t | awk '{print $14}' | tail -1 | xargs)
-disk_io=$(echo "$vm" -d| awk '{print $10}'| tail -1 |xargs)
-disk_available=$(echo "$disk" -BM | awk '{print $4}'|head -6| tail -1| egrep -o '[0-9]+'| xargs)
-
-
 
 # insert staemaent
-in_state=" INSERT INTO host_usage (timestamp,memory_free, cpu_idle, cpu_kernel,disk_io,disk_available)
-VALUES ('"$timestamp"', '"$memory_free"','"$cpu_idle"','"$cpu_kernel"','"$disk_io"','"$disk_available"')"
+in_stat="INSERT INTO host_info (hostname, cpu_number, cpu_architecture, cpu_model, cpu_mhz,L2_cache, total_mem, timestamp)
+VALUES ('$hostname', '$cpu_number', '$cpu_architecture', '$cpu_model', '$cpu_mhz','$l2_cache', '$total_mem', '$timestamp');"
 
-# Connect to PSQL instance
-psql psql -h $psql_host -U $psql_user  -d $db_name -c "$in_state"
+# connect to PSQL instance
+psql -h $psql_host -U $psql_user  -d $db_name -c "$ins_stat"
 
 exit $?

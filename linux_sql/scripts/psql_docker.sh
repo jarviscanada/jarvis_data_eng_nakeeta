@@ -1,5 +1,6 @@
+#!/bin/bash
 
-ption=$1
+option=$1
 username=$2
 password=$3
 

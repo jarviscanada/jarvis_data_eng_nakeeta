@@ -25,4 +25,4 @@ VALUES ('$hostname', '$cpu_number', '$cpu_architecture', '$cpu_model', '$cpu_mhz
 # connect to PSQL instance
 psql -h $psql_host -U $psql_user  -d $db_name -c "$ins_stat"
 
-exit $?
+exit 0

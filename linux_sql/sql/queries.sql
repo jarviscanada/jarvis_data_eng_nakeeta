@@ -9,9 +9,8 @@ ORDER BY total_mem DESC;
 -- Average memeory usage
 SELECT 
 	id, hostname,
-	to_char( to_timestamp(round(extract(epoch from host_usage.timestamp) / 300) * 300), 'YYYY-MM-DD HH24:MI:SS') AS truncated_timestamp,
-	(AVG(total_mem-memory_free)*100/total_mem)::INTEGER AS avg_used_mem_percentage 
+	to_char( to_timestamp(round(extract(epoch from host_usage.timestamp) / 300) * 300), 'YYYY-MM-DD HH24:MI:SS') timestamp,
+	(AVG(total_mem-memory_free)*100/total_mem)::INTEGER AS memory_precentage 
 FROM host_info 
 INNER JOIN  host_usage ON host_info.id=host_usage.host_id 
-GROUP BY truncated_timestamp, id 
-ORDER BY id ASC;
+GROUP BY timestamp, id ASC;

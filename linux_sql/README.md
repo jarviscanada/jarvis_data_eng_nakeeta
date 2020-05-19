@@ -2,7 +2,7 @@
 ## Introduction
 The Linux Cluster Administration (LCA) Team has been requested with the responsibility of managing a Linux cluster. The cluster consists of 10 nodes/servers, all running on CentOS7 and are internally connected by a switch. Cluster Monitor agent is an internal tool that monitors server clusters by recording CPU and memory hardware specifications of each node/server. The collected data is then stored in a local PostgreSQL database. This allows the LCA team the  see the usage and activity of each node/server, which will be informative when making business decisions.
 ## Architecture and Design
-!(linux_sql/assets/Untitled Diagram.png)
+![Untitled Diagram](https://user-images.githubusercontent.com/64488220/81887214-9e1e1680-956c-11ea-8fb2-5055bb4d5c9d.png)
 The diagram above illustrates a simmilar architecture design using 3 nodes  <br /> <br /> 
 ### Database tables
 #### host_info.sh

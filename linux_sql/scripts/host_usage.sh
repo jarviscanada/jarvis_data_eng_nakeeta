@@ -18,7 +18,7 @@ timestamp=$(date '+%Y-%m-%d %T')
 memory_free=$(echo "$vm_list" -t|  awk '{print $4}' | tail -1 | egrep -o "[0-9]{2,}" | xargs)
 cpu_idle=$(echo "$vm_list" -t | awk '{ print $15}' | tail -1 | xargs)
 cpu_kernel=$(echo "$vm_list" -t | awk '{print $14}' | tail -1 | xargs)
-disk_io=$(echo "$vm_list" -d| awk '{print $10}'| tail -1 |xargs)
+disk_io=$(echo "$vm_list" -d| awk '{print $10}'| tail -1  |egrep -o "[0-9]{2,}" |  xargs)
 disk_available=$(echo "$disk" -BM | awk '{print $4}' | head -6 | tail -1 | egrep -o '[1-9]+'  | xargs)
 
 

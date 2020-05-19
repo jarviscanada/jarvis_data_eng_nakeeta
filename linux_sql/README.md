@@ -45,21 +45,25 @@ Note: if User name or password are not provied error message will be displayed
 If container is already created then docker container will start  
 #### Stop
 `./psql_docker.sh [Stop] [db_username] [db_password]`
-Stops socker container
+Stops  container
 ### ddl.sql
 Creates two Tables host_info and host_usage. 
-how to run the script:
+how to run the script:<br />  <br /> 
 `./psql -h [hostname] -U [username] -p [port number] -c ddl.sql`
 ### host_info.sh
 Collects all hardware specifications and inputs the values into ddl.sql
-how to run the script:
+how to run the script:<br />  <br /> 
 `./host_info.sh [hostname] [database name] [username] [user password]`
 ### host_usage.sh
 Collects all hardware specifications and inputs the values into ddl.sql
-how to run the script:
+how to run the script:<br />  <br /> 
 `./host_usage.sh [hostname] [database name] [username] [user password]`
-
-
+### Real time monitoring 
+Using crontab execute `host_usage.sh` every minuite <br />  <br /> 
+Edit crontab `crontab -e` <br /> 
+Add crontab `* * * * * bash <path_to_project>/linux_sql/scripts/host_usage.sh [psql_host] [psql_port] [db_name] [psql_user] [psql_passwd] >> /tmp/host_usage.log`<br /> 
+To check all running crontabs `crontab -l`
 ## Improvements 
 1) Combine host_info and host_usage into one table
-2) handle hardware updates 
+2) Handle hardware updates 
+3) Fault tolerance

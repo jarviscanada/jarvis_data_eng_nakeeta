@@ -8,17 +8,17 @@ The diagram above illustrates a simmilar architecture design using 3 nodes  <br 
 #### host_info.sh
 host_info stores hardware specifications of each node/server of the host machine <br />  <br /> 
 
-| Name               | Type      | Description                               |
-|--------------------|-----------|-------------------------------------------|
-| 'id'               | SERIAL    | Primary key, ID for host machine          |
-| 'hostname'         | VARCHAR   | Host machine name                         |
-| 'cpu_number'       | INT       | Number of cpu cores                       |
-| 'cpu_architecture' | VARCHAR   | CPU architecture of host machine          |
-| 'cpu_model'        | VARCHAR   | Model name and type of CPU                |
-| 'cpu_mhz'          | DECIMAL   | The speed of microprocessors Units:GHz    |
-| 'L2_cache'         | INT       | L2 cache of host machine Units :KB        |
-| 'total_mem'        | INT       | Total memory of host michine units:KB     |
-| 'timestamp'        | TIMESTAMP | Timestamp format 2020-05-29 17:49:53      |
+| Name             | Type      | Description                               |
+|------------------|-----------|-------------------------------------------|
+| id               | SERIAL    | Primary key, ID for host machine          |
+| hostname         | VARCHAR   | Host machine name                         |
+| cpu_number       | INT       | Number of cpu cores                       |
+| cpu_architecture | VARCHAR   | CPU architecture of host machine          |
+| cpu_model        | VARCHAR   | Model name and type of CPU                |
+| cpu_mhz          | DECIMAL   | The speed of microprocessors Units:GHz    |
+| L2_cache         | INT       | L2 cache of host machine Units :KB        |
+| total_mem        | INT       | Total memory of host michine units:KB     |
+| timestamp        | TIMESTAMP | Timestamp format 2020-05-29 17:49:53      |
 
 #### host_usage.sh
 host_usage.sh collects Linux resource usage data <br />  <br /> 

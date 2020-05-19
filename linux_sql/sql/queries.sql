@@ -1,15 +1,21 @@
 -- Question 1
 --Group hosts by CPU number and sort by their memory size in descending order(within each cpu_number group)
-SELECT cpu_number,id,total_mem
+SELECT id,cpu_number,total_mem
 FROM host_info
-GROUP BY cpu_number
+GROUP BY cpu_number,id 
 ORDER BY total_mem DESC;
 
 -- Question 2
 -- Average memeory usage
-SELECT id, hostname,
-	to_char( to_timestamp(round(extract(epoch from host_usage.timestamp) / 100) * 100), 'YYYY-MM-DD HH24:MI:SS') AS time_run,
-	(AVG(total_mem-memory_free)*100/total_mem)::INTEGER AS avg_used_mem_percentage 
-FROM host_info 
-INNER JOIN  host_usage ON host_info.id=host_usage.host_id 
-GROUP BY time_run,id;
+SELECT host_usage.host_id, host_info.hostname, host_usage.timestamp, 
+    AVG(((host_info.total_mem - host_usage.memory_free) / host_info.total_mem::float) * 100) 
+      OVER ( 
+        PARTITION BY (
+            DATE_TRUNC('hour', host_usage.timestamp) + 
+            DATE_PART('min', host_usage.timestamp)::int / 5 * interval '5 min'
+        )
+    ) AS avg_used_mem_perc 
+FROM 
+    host_usage  INNER JOIN host_info  ON host_usage.host_id = host_info.id
+ORDER BY
+    host_usage.host_id; 

@@ -8,8 +8,8 @@ ORDER BY total_mem DESC;
 -- Question 2
 -- Average memeory usage
 SELECT id, hostname,
-	time_cal( to_timestamp(round(extract(epoch from host_usage.timestamp) / 300) * 300), '+%Y-%m-%d %T') AS timestamp,
+	time_cal( to_timestamp(round(extract(epoch from host_usage.timestamp) / 300) * 300), '+%Y-%m-%d %T') AS time_run,
 	(AVG(total_mem-memory_free)*100/total_mem)::INTEGER AS memory_precentage 
 FROM host_info 
 INNER JOIN  host_usage ON host_info.id=host_usage.host_id 
-GROUP BY timestamp, id ASC;
+GROUP BY time_run, id ASC;

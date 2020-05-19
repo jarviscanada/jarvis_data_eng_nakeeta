@@ -38,13 +38,13 @@ host_usage.sh collects Linux resource usage data <br />  <br />
 ### psql_docker.sh
 psql_docker has 3 input options when executing 
 #### Create 
-`./psql_docker.sh [create] [db_username] [db_password]`
+`./psql_docker.sh [create] [db_username] [db_password]`<br /> 
 Note: if User name or password are not provied error message will be displayed
 #### Start
-`./psql_docker.sh [Start] [db_username] [db_password]`
+`./psql_docker.sh [Start] [db_username] [db_password]`<br /> 
 If container is already created then docker container will start  
 #### Stop
-`./psql_docker.sh [Stop] [db_username] [db_password]`
+`./psql_docker.sh [Stop] [db_username] [db_password]`<br /> 
 Stops  container
 ### ddl.sql
 Creates two Tables host_info and host_usage. 

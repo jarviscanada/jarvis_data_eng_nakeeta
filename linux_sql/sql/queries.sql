@@ -7,12 +7,13 @@ ORDER BY total_mem DESC;
 
 -- Question 2
 -- Average memeory usage
-SELECT host_info.id,host_info.hostname,
+SELECT host_usage.id,host_info.hostname, host_usage.timestamp,
         -- find Average used memory in percentage over 5 mins interval
-        AVG(((host_info.total_mem - host_usage.memory_free)*100/host_info.total_mem) OVER ( 
+        AVG((host_info.total_mem - host_usage.memory_free)*100/host_info.total_mem) 
+        OVER ( 
             PARTITION BY (
-                hour('hour', u.timestamp) + 
-                min('min', u.timestamp)::int / 5 * interval '5 min'
+                hour('hour', host_usage.timestamp) + 
+                min('min', host_usage.timestamp)::int / 5 * interval '5 min'
             )
         ) AS avg_used_mem_perc
         

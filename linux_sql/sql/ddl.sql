@@ -12,12 +12,10 @@ CREATE TABLE IF NOT EXISTS host_info
                
 -- Create table host usage 
 CREATE TABLE IF NOT EXISTS host_usage
-	(
-	timestamp TIMESTAMP NOT NULL,
-	host_id SERIAL NOT NULL REFERENCES host_info(id),
-	memory_free INT NOT NULL,
-	cpu_idle INT NOT NULL,
-	cpu_kernel INT NOT NULL,
-	disk_io INT NOT NULL,
-	disk_available INT NOT NULL
-	);
+ (timestamp TIMESTAMP NOT NULL,
+ host_id SERIAL NOT NULL REFERENCES host_info(id),
+ memory_free INT NOT NULL,
+ cpu_idle INT NOT NULL,
+ cpu_kernel INT NOT NULL,
+ disk_io INT NOT NULL,
+ disk_available INT NOT NULL);

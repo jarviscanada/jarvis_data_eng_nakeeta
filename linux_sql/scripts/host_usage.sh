@@ -1,5 +1,5 @@
 #!/bin/bash
-# assign CLI arguments to variables
+## assign CLI arguments to variables
 psql_host=$1
 psql_port=$2
 db_name=$3
@@ -7,24 +7,23 @@ psql_user=$4
 psql_password=$5
 export PGPASSWORD=$psql_password
 
-# parse host hardware specifications using bash cmds
-lscpu=`lscpu`
-vm= `vmstat`
-disk= `df`
+## parse host hardware specifications using bash cmds
+cpu_list=`lscpu`
+vm_list=`vmstat`
+disk=`df`
 timestamp=$(date '+%Y-%m-%d %T')
-memory_free=$(cat /proc/meminfo | grep "MemFree"| egrep -o "[0-9]{2,}"| xargs)
-cpu_idle=$(echo "$vm" -t | awk '{ print $15}' |tail -1 | xargs)
-cpu_kernel=$(echo "$vm" -t | awk '{print $14}' | tail -1 | xargs)
-disk_io=$(echo "$vm" -d| awk '{print $10}'| tail -1 |xargs)
-disk_available=$(echo "$disk" -BM | awk '{print $4}'|head -6| tail -1| egrep -o '[0-9]+'| xargs)
+memory_free=$(echo "$vm_list" -t|  awk '{print $4}' | tail -1 | egrep -o "[0-9]{2,}" | xargs)
+cpu_idle=$(echo "$vm_list" -t | awk '{ print $15}' | tail -1 | xargs)
+cpu_kernel=$(echo "$vm_list" -t | awk '{print $14}' | tail -1 | xargs)
+disk_io=$(echo "$vm_list" -d| awk '{print $10}'| tail -1 |xargs)
+disk_available=$(echo "$disk" -BM | awk '{print $4}' | head -6 | tail -1 | egrep -o '[0-9]+'  | xargs)
+host_id=$(echo "$(psql -h localhost -U postgres -d host_agent -c "select id from host_info where hostname='$hostname'" | head -3 | tail -1 | egrep -o '[0-9]+'  | xargs)")
 
+## insert staemaent
 
+insert_statement="INSERT INTO host_usage (timestamp, host_id, memory_free, cpu_idle, cpu_kernel,disk_io, disk_available) VALUES ('$timestamp', '$host_id', '$memory_free', '$cpu_idle', '$cpu_kernel','$disk_io', '$disk_available');"
 
-# insert staemaent
-in_state=" INSERT INTO host_usage (timestamp,memory_free, cpu_idle, cpu_kernel,disk_io,disk_available)
-VALUES ('"$timestamp"', '"$memory_free"','"$cpu_idle"','"$cpu_kernel"','"$disk_io"','"$disk_available"')"
+##executing insert command
+psql -h $psql_host -U $psql_user -d $db_name -c "$insert_statement"
 
-# Connect to PSQL instance
-psql -h $psql_host -U $psql_user  -d $db_name -c "$in_state"
-
-exit $?
+exit 0

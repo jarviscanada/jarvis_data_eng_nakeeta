@@ -9,16 +9,13 @@ CREATE TABLE IF NOT EXISTS host_info
   total_mem INT NOT NULL, 
   timestamp TIMESTAMP NOT NULL, 
   PRIMARY KEY (id));
-
--- Create table host usage
+               
+-- Create table host usage 
 CREATE TABLE IF NOT EXISTS host_usage
-  (timestamp TIMESTAMP NOT NULL,
-   host_id SERIAL NOT NULL,
-   memory_free INT NOT NULL,
-   cpu_idle INT NOT NULL,
-   cpu_kernel INT NOT NULL,
-   disk_io INT NOT NULL,
-   disk_available INT NOT NULL,
-   id INT NOT NULL,
-   Primary key(host_id),
-   FOREIGN KEY (id) REFERENCES host_info(id));
+ (timestamp TIMESTAMP NOT NULL,
+ host_id SERIAL NOT NULL REFERENCES host_info(id),
+ memory_free INT NOT NULL,
+ cpu_idle INT NOT NULL,
+ cpu_kernel INT NOT NULL,
+ disk_io INT NOT NULL,
+ disk_available INT NOT NULL);

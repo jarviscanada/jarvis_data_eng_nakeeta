@@ -61,7 +61,8 @@ how to run the script:<br />  <br />
 ### Real time monitoring 
 Using crontab execute `host_usage.sh` every minuite <br />  <br /> 
 Edit crontab `crontab -e` <br /> 
-Add crontab `* * * * * bash <path_to_project>/linux_sql/scripts/host_usage.sh [psql_host] [psql_port] [db_name] [psql_user] [psql_passwd] >> /tmp/host_usage.log`<br /> 
+Add crontab<br />
+`* * * * * bash <path_to_project>/linux_sql/scripts/host_usage.sh [psql_host] [psql_port] [db_name] [psql_user] [psql_passwd] >> /tmp/host_usage.log`<br /> 
 To check all running crontabs `crontab -l`
 ## Improvements 
 1) Combine host_info and host_usage into one table

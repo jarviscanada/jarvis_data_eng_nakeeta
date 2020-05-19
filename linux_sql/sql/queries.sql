@@ -12,4 +12,4 @@ SELECT id, hostname,
 	(AVG(total_mem-memory_free)*100/total_mem)::INTEGER AS memory_percentage 
 FROM host_info 
 INNER JOIN  host_usage ON host_info.id=host_usage.host_id 
-GROUP BY time_run, id ASC;
+GROUP BY time_run;

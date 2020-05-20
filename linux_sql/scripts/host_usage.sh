@@ -23,9 +23,9 @@ disk_available=$(echo "$disk" -BM | awk '{print $4}' | head -6 | tail -1 | egrep
 
 
 ## insert staemaent
-insert_statement="INSERT INTO host_usage (timestamp, host_id, memory_free, cpu_idle, cpu_kernel,disk_io, disk_available) VALUES ('$timestamp', '$host_id', '$memory_free', '$cpu_idle', '$cpu_kernel','$disk_io', '$disk_available');"
+stat="INSERT INTO host_usage (timestamp, host_id, memory_free, cpu_idle, cpu_kernel,disk_io, disk_available) VALUES ('$timestamp', '$host_id', '$memory_free', '$cpu_idle', '$cpu_kernel','$disk_io', '$disk_available');"
 
 ##insert command
-psql -h $psql_host -U $psql_user -d $db_name -c "$insert_statement"
+psql -h $psql_host -U $psql_user -d $db_name -c "$stat"
 
-exit 0
+exit $?

@@ -5,14 +5,15 @@ The Linux Cluster Administration (LCA) Team has been assigned with the responsib
 The Cluster monitoring solution presented below is minimum viable product (MVP), all testing has been conducted on a single machine rather then a cluster.  The collected data will be stored in a PostgreSQL database. All required scripts to start, stop and create a PostgreSQL instance in a Docker container is provided.  Scripts to collect and store hardware specification and usage data in the PostgreSQL instance are also provided in this solution.<br />
 ## Architecture and Design
 ![My Image](./assets/my_image.png)
-<center>  The diagram above illustrates a three node cluster internally conneacted by a switch </center> <br /> 
+The diagram above illustrates a three node cluster internally conneacted by a switch <br /> 
 ### Database tables
-#### host_info.sh
-host_info stores hardware specifications of each node/server of the host machine <br />  <br /> 
+The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host_usage`. <br /> 
+
+`host_info`stores hardware specifications of each node/server of the host machine. This sloution assumes hardware specifications are constant and do not change.<br/>
 
 | Name             | Type      | Description                               |
 |------------------|-----------|-------------------------------------------|
-| id               | SERIAL    | Primary key, ID for host machine          |
+| id               | SERIAL    | Primary key, Unique ID for host machine   |
 | hostname         | VARCHAR   | Host machine name                         |
 | cpu_number       | INT       | Number of cpu cores                       |
 | cpu_architecture | VARCHAR   | CPU architecture of host machine          |
@@ -20,10 +21,10 @@ host_info stores hardware specifications of each node/server of the host machine
 | cpu_mhz          | DECIMAL   | The speed of microprocessors Units:GHz    |
 | L2_cache         | INT       | L2 cache of host machine Units :KB        |
 | total_mem        | INT       | Total memory of host michine units:KB     |
-| timestamp        | TIMESTAMP | Timestamp format 2020-05-29 17:49:53      |
-
-#### host_usage.sh
-host_usage.sh collects Linux resource usage data <br />  <br /> 
+| timestamp        | TIMESTAMP | UTC Timestamp format 2020-05-29 17:49:53  |
+<br/>
+`host_usage.sh`
+host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  <br /> 
 
 | Name             | Type      | Description                               |
 |------------------|-----------|-------------------------------------------|
@@ -34,7 +35,7 @@ host_usage.sh collects Linux resource usage data <br />  <br />
 | cpu_kernel       | INT       | CPU kernel usage in precentage            |
 | disk_io          | INT       | Number disk in IO                         |
 | disk_available   | INT       | Disk space avalible                       |
-| timestamp        | TIMESTAMP | Timestamp format 2020-05-29 17:49:53      |
+| timestamp        | TIMESTAMP | TUC Timestamp format 2020-05-29 17:49:53      |
 
 ## Usage
 ### psql_docker.sh
@@ -61,11 +62,16 @@ Collects all hardware specifications and inputs the values into ddl.sql
 how to run the script:<br />  <br /> 
 `./host_usage.sh [hostname] [database name] [username] [user password]`
 ### Real time monitoring 
-Using crontab execute `host_usage.sh` every minuite <br />  <br /> 
-Edit crontab `crontab -e` <br /> 
-Add crontab<br />
-`* * * * * bash <path_to_project>/linux_sql/scripts/host_usage.sh [psql_host] [psql_port] [db_name] [psql_user] [psql_passwd] >> /tmp/host_usage.log`<br /> 
-To check all running crontabs `crontab -l`
+Using crontab execute `host_usage.sh` every minuite <br /> 
+```
+#Edit crontab
+crontab -e
+# Add thefollowing code in the crontab flie 
+* * * * * bash /home/centos/dev/jrvs/bootcamp/linux_sql/host_agent/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
+
+#To check all running crontabs
+crontab -l
+```
 ## Improvements 
 1) Combine host_info and host_usage into one table
 2) Handle hardware updates 

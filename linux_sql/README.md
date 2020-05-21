@@ -22,7 +22,7 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 | L2_cache         | INT       | L2 cache of host machine Units :KB        |
 | total_mem        | INT       | Total memory of host michine units:KB     |
 | timestamp        | TIMESTAMP | UTC Timestamp format 2020-05-29 17:49:53  |
-<br/>
+
 `host_usage.sh`
 host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  <br /> 
 

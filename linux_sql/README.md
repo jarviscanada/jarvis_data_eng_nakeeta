@@ -1,9 +1,11 @@
 # Linux Cluster Monitoring Agent
 ## Introduction
-The Linux Cluster Administration (LCA) Team has been requested with the responsibility of managing a Linux cluster. The cluster consists of 10 nodes/servers, all running on CentOS7 and are internally connected by a switch. Cluster Monitor agent is an internal tool that monitors server clusters by recording CPU and memory hardware specifications of each node/server. The collected data is then stored in a local PostgreSQL database. This allows the LCA team the  see the usage and activity of each node/server, which will be informative when making business decisions.
+The Linux Cluster Administration (LCA) Team has been assigned with the responsibility of managing a Linux cluster. The cluster consists of 10 nodes/servers all running on CentOS7 and are internally connected by a switch and can communicate through internal IPv4 addresses. The LCA team needs record the hardware specifications of each node and monitor node resource usage, such CPU and memory usage. The collected data will be in realtime and should be stored in a RDBMS database. The LCA team will use the usage and activity data of each node/server when making future business/ resource planning decisions. <br />
+## Overview 
+The Cluster monitoring solution presented below is minimum viable product (MVP), all testing has been conducted on a single machine rather then a cluster.  The collected data will be stored in a PostgreSQL database. All required scripts to start, stop and create a PostgreSQL instance in a Docker container is provided.  Scripts to collect and store hardware specification and usage data in the PostgreSQL instance are also provided in this solution.<br />
 ## Architecture and Design
 ![My Image](./assets/my_image.png)
-The diagram above illustrates a simmilar architecture design using 3 nodes  <br /> <br /> 
+<center>  The diagram above illustrates a three node cluster internally conneacted by a switch </center> <br /> 
 ### Database tables
 #### host_info.sh
 host_info stores hardware specifications of each node/server of the host machine <br />  <br /> 

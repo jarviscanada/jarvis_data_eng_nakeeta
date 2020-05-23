@@ -21,7 +21,7 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 	-  `timestamp`: UTC timestamp; time of data collection 
 
 - `host_usage.sh`host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  
-        - `timestamp`: UTC timestamp; time of data collection 
+	-  `timestamp`: UTC timestamp; time of data collection
 	- `host_id`: The ID of the current node. Foreign key references host_info id.	
 	- `cpu_number`: The number of CPU cores
 	- `memory_free`: Free memory available; measured in MB
@@ -31,6 +31,15 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 	- `disk_io`: The number of current disk I/O operations in progress
 	- `disk_available`: Disk space available; measured in MB
 
+
+## Script Description 
+- [psql docker](linux_sql/scripts/psql_docker.sh) is used to create and start/stop a docker container. When docker container is started a PostgreSQL instance is run.
+- [host info](linux_sql/scripts/host_info.sh) is run once on every node in the Linux cluster system in order to collect hardware configuration information of each node.  
+- [host_usage](linux_sql/scripts/host_usage.sh) is run periodically on every node in the Linux cluster system in order to collect up-to-date hardware specification and to keep track of usage over time.
+- [ddl](linux_sql/sql/ddl.sql) is used to automate the creation of `host-info` and `host_usage` tables in the ` host_agent` database and to eliminate all manual processes. 
+- [queries](linux_sql/sql/linux_sql/sql/queries.sql) Is used to create two SQL queries in order to help the users manage the cluster more efficiently and to provide data for future resource planning purposes. 
+  -The first query displays the total memory used by each node 
+  -The second query calculates the average  amount of memory used by each node; calculated over a 5 minute interval.
 
 
 ## Usage
@@ -61,7 +70,7 @@ how to run the script:<br />  <br />
 Using crontab execute `host_usage.sh` every minuite <br /> 
 ```
 #Edit crontab
-crontab -e
+crontab -e 
 # Add thefollowing code in the crontab flie 
 * * * * * bash /home/centos/dev/jrvs/bootcamp/linux_sql/host_agent/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
 

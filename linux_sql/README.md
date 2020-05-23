@@ -21,7 +21,7 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 	-  `timestamp`: UTC timestamp; time of data collection 
 
 - `host_usage.sh`host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  
-  -`timestamp`: UTC timestamp; time of data collection 
+        - `timestamp`: UTC timestamp; time of data collection 
 	- `host_id`: The ID of the current node. Foreign key references host_info id.	
 	- `cpu_number`: The number of CPU cores
 	- `memory_free`: Free memory available; measured in MB

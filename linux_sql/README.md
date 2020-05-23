@@ -5,37 +5,33 @@ The Linux Cluster Administration (LCA) Team has been assigned with the responsib
 The Cluster monitoring solution presented below is minimum viable product (MVP), all testing has been conducted on a single machine rather then a cluster.  The collected data will be stored in a PostgreSQL database. All required scripts to start, stop and create a PostgreSQL instance in a Docker container is provided.  Scripts to collect and store hardware specification and usage data in the PostgreSQL instance are also provided in this solution.<br />
 ## Architecture and Design
 ![My Image](./assets/my_image.png)
-The diagram above illustrates a three node cluster internally conneacted by a switch <br /> 
+The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
 ### Database tables
-The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host_usage`. <br /> 
+The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host_usage`. Values in both tables contain a NOT NULL constraint. <br /> 
 
-`host_info`stores hardware specifications of each node/server of the host machine. This sloution assumes hardware specifications are constant and do not change.<br/>
+- `host_info`stores hardware specifications of each node/server of the host machine. Data is extracted only once from each node. This solution assumes hardware specifications are constant and do not change.<br/>
+	-  `id`: Automatically generated unique ID numbers for each node. Primary key of this table.
+	-  `hostname`: The full hostname of the node. Hostname is a Unique value.
+	-  `cpu_number`: The number of CPU cores 
+	- `cpu_architecture`: CPU architecture type 
+	 -  `cpu_model`: Model name and type of CPU
+	-  `cpu_mhz`: The speed of microprocessors; measured in GHz
+	-  `L2_cache`: L2_cache size; measured in KB
+	-  `total_mem`: Memory size of current node; measured in KB
+	-  `timestamp`: UTC timestamp; time of data collection 
 
-| Name             | Type      | Description                               |
-|------------------|-----------|-------------------------------------------|
-| id               | SERIAL    | Primary key, Unique ID for host machine   |
-| hostname         | VARCHAR   | Host machine name                         |
-| cpu_number       | INT       | Number of cpu cores                       |
-| cpu_architecture | VARCHAR   | CPU architecture of host machine          |
-| cpu_model        | VARCHAR   | Model name and type of CPU                |
-| cpu_mhz          | DECIMAL   | The speed of microprocessors Units:GHz    |
-| L2_cache         | INT       | L2 cache of host machine Units :KB        |
-| total_mem        | INT       | Total memory of host michine units:KB     |
-| timestamp        | TIMESTAMP | UTC Timestamp format 2020-05-29 17:49:53  |
+- `host_usage.sh`host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  
+  -`timestamp`: UTC timestamp; time of data collection 
+	- `host_id`: The ID of the current node. Foreign key references host_info id.	
+	- `cpu_number`: The number of CPU cores
+	- `memory_free`: Free memory available; measured in MB
+	- `cpu_idle`: CPU idle; measured in percentage 
+	- `cpu_kernel`: CPU kernel usage; measured in percentage 
+	- `L2_cache`: L2_cache size; measured in kB
+	- `disk_io`: The number of current disk I/O operations in progress
+	- `disk_available`: Disk space available; measured in MB
 
-`host_usage.sh`
-host_usage.sh collects the following usage information by each node every minute, this is done inorder to keep resource usage information up-to-date and to track usage over time.  <br />  <br /> 
 
-| Name             | Type      | Description                               |
-|------------------|-----------|-------------------------------------------|
-| id               | SERIAL    | REFERENCES id host_info                   |
-| host_id          | SERIAL    | Primary KEY                               |
-| memory_free      | INT       | Free memory, Units:MB                     |
-| cpu_idle         | INT       | CPU idle in precentage                    |
-| cpu_kernel       | INT       | CPU kernel usage in precentage            |
-| disk_io          | INT       | Number disk in IO                         |
-| disk_available   | INT       | Disk space avalible                       |
-| timestamp        | TIMESTAMP | TUC Timestamp format 2020-05-29 17:49:53      |
 
 ## Usage
 ### psql_docker.sh

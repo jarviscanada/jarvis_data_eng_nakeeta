@@ -45,15 +45,15 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 ## Usage
 ### Database and Table Initialization 
 1)Provision a PostgreSQL instance by creating and starting a Docker container. </br>
-     `./linux_sql/psql_docker.sh create db_username db_password`
+     `./linux_sql/psql_docker.sh create db_username db_password`  <br />  <br />
 2) Create `host_agent` database </br>
-	`psql -h localhost -U postgres -W postgres=# CREATE DATABASE host_agent;`
+	`psql -h localhost -U postgres -W postgres=# CREATE DATABASE host_agent;` <br /> <br />
 3) Create Table `host_info` and `host_usage`</br>
-	`psql -h localhost -U postgres -W -d host_agent -f ./linux_sql/sql/ddl.sql`
+	`psql -h localhost -U postgres -W -d host_agent -f ./linux_sql/sql/ddl.sql` <br />
 ### host_info.sh Usage
 This script only needs to be run once on every node in order to insert hardware specifications into table `host_info`. Note: this solution assumes that hardware specifications will not change.</br>
 ` ./linux_sql/scripts/host_infor.sh psql_host psql_port db_name psql_user psql_password`
-## host_usage.sh Usage 
+### host_usage.sh Usage 
 `host_usage.sh` will insert hardware usage data  into table `host_usage`. This script need to be executed continuously over a period of time in order to collect required data </br> </br>
 ` ./linux_sql/scripts/host_usage.sh psql_host psql_port db_name psql_user psql_password`
 ### Real time monitoring 
@@ -67,7 +67,7 @@ crontab -e
 crontab -l
 ```
 ## Improvements 
-1)`host_usage.sh` can collect a large amount of data in a short amount of time. By dding a script to calculate and store the average hardware usage over a time interval, then removing the data. Will allow user to collect accurate data while reducing database and storage size. 
-2)This solution assumes that hardware specification will not change. By adding a helper script to detect hardware changes, also the solution to be more adaptable.
-3)Create a script to detect faulty nodes and stop data collection from faulty nodes. Script will detect if node is no longer faulty then start data collection again. This will insure data collected in accurate. 
+1) `host_usage.sh` can collect a large amount of data in a short amount of time. By dding a script to calculate and store the average hardware usage over a time interval, then removing the data. Will allow user to collect accurate data while reducing database and storage size.  <br />  <br />
+2) This solution assumes that hardware specification will not change. By adding a helper script to detect hardware changes, also the solution to be more adaptable. <br />  <br />
+3) Create a script to detect faulty nodes and stop data collection from faulty nodes. Script will detect if node is no longer faulty then start data collection again. This will insure data collected in accurate. 
 

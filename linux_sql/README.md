@@ -38,42 +38,31 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 - [host_usage](linux_sql/scripts/host_usage.sh) is run periodically on every node in the Linux cluster system in order to collect up-to-date hardware specification and to keep track of usage over time.
 - [ddl](linux_sql/sql/ddl.sql) is used to automate the creation of `host-info` and `host_usage` tables in the ` host_agent` database and to eliminate all manual processes. 
 - [queries](linux_sql/sql/linux_sql/sql/queries.sql) Is used to create two SQL queries in order to help the users manage the cluster more efficiently and to provide data for future resource planning purposes. 
-  -The first query displays the total memory used by each node 
-  -The second query calculates the average  amount of memory used by each node; calculated over a 5 minute interval.
+  - The first query displays the total memory used by each node 
+  - The second query calculates the average  amount of memory used by each node; calculated over a 5-minute interval.
 
 
 ## Usage
-### psql_docker.sh
-psql_docker has 3 input options when executing 
-#### Create 
-`./psql_docker.sh [create] [db_username] [db_password]`<br /> 
-Note: if User name or password are not provied error message will be displayed
-#### Start
-`./psql_docker.sh [Start] [db_username] [db_password]`<br /> 
-If container is already created then docker container will start  
-#### Stop
-`./psql_docker.sh [Stop] [db_username] [db_password]`<br /> 
-Stops  container
-### ddl.sql
-Creates two Tables host_info and host_usage. 
-how to run the script:<br />  <br /> 
-`./psql -h [hostname] -U [username] -p [port number] -c ddl.sql`
-### host_info.sh
-Collects all hardware specifications and inputs the values into ddl.sql
-how to run the script:<br />  <br /> 
-`./host_info.sh [hostname] [database name] [username] [user password]`
-### host_usage.sh
-Collects all hardware specifications and inputs the values into ddl.sql
-how to run the script:<br />  <br /> 
-`./host_usage.sh [hostname] [database name] [username] [user password]`
+### Database and Table Initialization 
+1)Provision a PostgreSQL instance by creating and starting a Docker container. </br>
+     `./linux_sql/psql_docker.sh create db_username db_password`
+2) Create `host_agent` database </br>
+	`psql -h localhost -U postgres -W postgres=# CREATE DATABASE host_agent;`
+3) Create Table `host_info` and `host_usage`</br>
+	`psql -h localhost -U postgres -W -d host_agent -f ./linux_sql/sql/ddl.sql`
+### host_info.sh Usage
+This script only needs to be run once on every node in order to insert hardware specifications into table `host_info`. Note: this solution assumes that hardware specifications will not change.</br>
+` ./linux_sql/scripts/host_infor.sh psql_host psql_port db_name psql_user psql_password`
+## host_usage.sh Usage 
+`host_usage.sh` will insert hardware usage data  into table `host_usage`. This script need to be executed continuously over a period of time in order to collect required data </br> </br>
+` ./linux_sql/scripts/host_usage.sh psql_host psql_port db_name psql_user psql_password`
 ### Real time monitoring 
-Using crontab execute `host_usage.sh` every minuite <br /> 
+Use Crontab to continuously run `host_usage.sh` script, in one minute intervals. <br /> 
 ```
 #Edit crontab
 crontab -e 
-# Add thefollowing code in the crontab flie 
+# Add a crontab job 
 * * * * * bash /home/centos/dev/jrvs/bootcamp/linux_sql/host_agent/scripts/host_usage.sh localhost 5432 host_agent postgres password > /tmp/host_usage.log
-
 #To check all running crontabs
 crontab -l
 ```

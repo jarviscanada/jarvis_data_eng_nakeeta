@@ -67,6 +67,7 @@ crontab -e
 crontab -l
 ```
 ## Improvements 
-1) Combine host_info and host_usage into one table
-2) Handle hardware updates 
-3) Fault tolerance
+1)`host_usage.sh` can collect a large amount of data in a short amount of time. By dding a script to calculate and store the average hardware usage over a time interval, then removing the data. Will allow user to collect accurate data while reducing database and storage size. 
+2)This solution assumes that hardware specification will not change. By adding a helper script to detect hardware changes, also the solution to be more adaptable.
+3)Create a script to detect faulty nodes and stop data collection from faulty nodes. Script will detect if node is no longer faulty then start data collection again. This will insure data collected in accurate. 
+

@@ -6,10 +6,14 @@ The Cluster monitoring solution presented below is minimum viable product (MVP),
 ## Architecture and Design
 ![My Image](./assets/my_image.png)
 <<<<<<< HEAD
+<<<<<<< HEAD
 The diagram above illustrates a simmilar architecture design using 3 nodes  <br /> <br /> 
 =======
 The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
 >>>>>>> master
+=======
+The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
+>>>>>>> e8c88621622ca2b052e71ed9789e4894d3d288f4
 ### Database tables
 The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host_usage`. Values in both tables contain a NOT NULL constraint. <br /> 
 

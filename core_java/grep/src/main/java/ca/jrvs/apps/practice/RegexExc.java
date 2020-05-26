@@ -17,7 +17,6 @@ public class RegexExc {
      */
 
     public boolean matchIp(String ip);
-
     /**
      * return true if line is empty (e.g empty, whitespace, tabs, etc..)
      *

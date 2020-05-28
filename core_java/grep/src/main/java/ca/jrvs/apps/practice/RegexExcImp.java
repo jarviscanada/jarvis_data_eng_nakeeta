@@ -1,6 +1,6 @@
 package ca.jrvs.apps.practice;
 
-public class RegexExcImp implements RegexExc {
+public class RegexExcImp extends RegexExc {
 
     public boolean matchJpeg(String fliename){
         return fliename.matches(".*.(jpeg|jeg)$");

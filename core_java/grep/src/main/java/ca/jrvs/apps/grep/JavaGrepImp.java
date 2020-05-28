@@ -1,23 +1,24 @@
 package ca.jrvs.apps.grep;
-import java.util.*;
-import java.io.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JavaGrepImp implements JavaGrep {
 
   private String regex;
   private String rootPath;
   private String outFile;
+  final Logger logger = LoggerFactory.getLogger(JavaGrep.class);
 
   public static void main (String[] args) {
 
-    final Logger logger = LoggerFactory.getLogger(JavaGrep.class);
-
-    if (args.length !=3){
-      throw new IllegalAccessException("USAGE: JavaGrep regex rootPath outFile");
+    if (args.length != 3) {
+      throw new IllegalArgumentException("USAGE: JavaGrep regex rootPath outFile");
     }
     JavaGrepImp javaGrepImp = new JavaGrepImp();
     javaGrepImp.setRegex(args[0]);

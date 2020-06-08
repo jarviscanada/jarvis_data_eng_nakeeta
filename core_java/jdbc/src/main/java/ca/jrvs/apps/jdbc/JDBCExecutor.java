@@ -1,8 +1,9 @@
 package ca.jrvs.apps.jdbc;
-import java.sql.Connection;
-import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class JDBCExecutor {
 
@@ -10,6 +11,7 @@ public class JDBCExecutor {
   final Logger logger = LoggerFactory.getLogger(JDBCExecutor.class);
   DatabaseConnectionManager dcm = new DatabaseConnectionManager("localhost", "hplussport", "postgres", "password");
   try{
+   /*
    Connection connection = dcm.getConnection();
    CustomerDAO customerDAO = new CustomerDAO(connection);
    Customer customer = new Customer();
@@ -21,15 +23,17 @@ public class JDBCExecutor {
    customer.setCity("Paris");
    customer.setState("ON");
    customer.setZipCode("22222");
+   customer
+   */
 
-   Customer dbCustomer = customerDAO.create(customer);
-   System.out.println(dbCustomer);
-   dbCustomer = customerDAO.findById(dbCustomer.getId());
-   System.out.println(dbCustomer);
-   dbCustomer.setEmail("email123@gmail.com");
-   dbCustomer = customerDAO.update(dbCustomer);
-   System.out.println(dbCustomer);
-   customerDAO.delete(dbCustomer.getId()
+   Connection connection =dcm.getConnection();
+   CustomerDAO customerDAO =new CustomerDAO(connection);
+   Customer customer = customerDAO.findByID (1000);
+   System.out.println(customer.getFirstName()+" " +customer.getLastname() " "+customer.getEmail());
+   customer.setEmail("will.Smith@gmail.com");
+   customer= customerDAO.update(customer);
+   System.out.println(customer.getFirstName()+" " +customer.getLastname() " "+customer.getEmail());
+
   }catch (SQLException e){
    logger.error(e.getMessage(),e);
   }

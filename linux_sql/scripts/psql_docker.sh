@@ -35,4 +35,4 @@ if [[ $option = "stop" ]]; then
    exit $?
 fi
 echo "Error: Invaid Entry"
-exit 0  
+exit $?

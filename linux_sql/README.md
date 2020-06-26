@@ -6,6 +6,8 @@ The Cluster monitoring solution presented below is minimum viable product (MVP),
 ## Architecture and Design
 ![My Image](./assets/my_image.png)
 The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
+The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
+The diagram above illustrates a three-node cluster internally connected by a switch.  Each node in the Linux cluster runs the Bash scripts `host_info` and `host_usage`. All data is then sent through the switch network and stored in the PSQL database, which is set up in Node 2.<br /> 
 ### Database tables
 The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host_usage`. Values in both tables contain a NOT NULL constraint. <br /> 
 
@@ -44,14 +46,14 @@ The PostgreSQL  database `host_agent`  contains two tables `host_info` and `host
 
 ## Usage
 ### Database and Table Initialization 
-1)Provision a PostgreSQL instance by creating and starting a Docker container. </br>
-     `./linux_sql/psql_docker.sh create db_username db_password`  <br />  <br />
-2) Create `host_agent` database </br>
+1)Provision a PostgreSQL instance by creating and starting a Docker container. </br></br>
+     `./linux_sql/psql_docker.sh create db_username db_password`  <br /> </br>
+2) Create `host_agent` database </br></br>
 	`psql -h localhost -U postgres -W postgres=# CREATE DATABASE host_agent;` <br /> <br />
-3) Create Table `host_info` and `host_usage`</br>
-	`psql -h localhost -U postgres -W -d host_agent -f ./linux_sql/sql/ddl.sql` <br />
+3) Create Table `host_info` and `host_usage`</br></br>
+	`psql -h localhost -U postgres -W -d host_agent -f ./linux_sql/sql/ddl.sql` <br /></br>
 ### host_info.sh Usage
-This script only needs to be run once on every node in order to insert hardware specifications into table `host_info`. Note: this solution assumes that hardware specifications will not change.</br>
+This script only needs to be run once on every node in order to insert hardware specifications into table `host_info`. Note: this solution assumes that hardware specifications will not change.</br> </br>
 ` ./linux_sql/scripts/host_infor.sh psql_host psql_port db_name psql_user psql_password`
 ### host_usage.sh Usage 
 `host_usage.sh` will insert hardware usage data  into table `host_usage`. This script need to be executed continuously over a period of time in order to collect required data </br> </br>

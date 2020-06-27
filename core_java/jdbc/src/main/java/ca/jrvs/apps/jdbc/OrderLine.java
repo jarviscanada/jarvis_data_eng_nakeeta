@@ -3,6 +3,7 @@ package ca.jrvs.apps.jdbc;
 import java.math.BigDecimal;
 
 public class OrderLine {
+
     private int quantity;
     private String productCode;
     private String productName;
@@ -10,59 +11,51 @@ public class OrderLine {
     private String productVariety;
     private BigDecimal productPrice;
 
-
-    public int getQuantity() {
+    public int getQuantity(){
         return quantity;
     }
-
-    public void setQuantity(int quantity) {
+    public void setQuanity(int quantity){
         this.quantity = quantity;
     }
 
-    public String getProductCode() {
+    public String getProductCode(){
         return productCode;
     }
-
-    public void setProductCode(String productCode) {
+    public void setProductCode(String productCode){
         this.productCode = productCode;
     }
 
-    public String getProductName() {
+    public String getProductName(){
         return productName;
     }
-
-    public void setProductName(String productName) {
+    public void setProductName(String productName){
         this.productName = productName;
     }
 
-    public int getProductSize() {
+    public int getProductSize(){
         return productSize;
     }
-
-    public void setProductSize(int productSize) {
+    public void setProductSize(int productSize){
         this.productSize = productSize;
     }
 
-    public String getProductVariety() {
+    public String getProductVariety(){
         return productVariety;
     }
-
-    public void setProductVariety(String productVariety) {
+    public void setProductVariety(String productVariety){
         this.productVariety = productVariety;
     }
 
-    public BigDecimal getProductPrice() {
+    public BigDecimal getProductPrice(){
         return productPrice;
     }
-
-    public void setProductPrice(BigDecimal productPrice) {
+    public void setProductPrice(BigDecimal productPrice){
         this.productPrice = productPrice;
     }
 
-
     @Override
     public String toString() {
-        return "OrderLine{" +
+        return "OrderLines{" +
                 "quantity=" + quantity +
                 ", productCode='" + productCode + '\'' +
                 ", productName='" + productName + '\'' +

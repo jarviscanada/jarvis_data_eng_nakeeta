@@ -70,7 +70,7 @@ public class TwitterCLIApp {
         try{
             System.out.println(JsonUtil.toJson(tweet,true, true));
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("RUNTIME ERROR ",  e);
+            throw new RuntimeException("RUNTIME ERROR: unable to convert to JSON string ",  e);
         }
     }
 }

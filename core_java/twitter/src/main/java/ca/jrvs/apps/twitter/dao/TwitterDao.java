@@ -87,7 +87,7 @@ public class TwitterDao implements CrdDao<Tweet, String> {
             jsonStr = EntityUtils.toString(response.getEntity());
         }
         catch (IOException e) {
-            throw new RuntimeException("RUNTIME ERROR");
+            throw new RuntimeException("RUNTIME ERROR: could not convert to string");
         }
 
         //Change JSON string to Tweet object
@@ -95,7 +95,7 @@ public class TwitterDao implements CrdDao<Tweet, String> {
             tweet = JsonUtil.toObjectFromJson(jsonStr, Tweet.class);
         }
         catch (IOException e) {
-            throw new RuntimeException("Runtime ERROR ", e);
+            throw new RuntimeException("Runtime ERROR: could not convert json to object  ", e);
         }
 
         return tweet;

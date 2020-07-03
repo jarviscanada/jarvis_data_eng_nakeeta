@@ -66,7 +66,7 @@ public class TwitterHttpHelper implements HttpHelper {
             return executeHttpRequest(HttpMethod.POST, uri, null);
         }
         catch (OAuthException | IOException e){
-            throw new RuntimeException("RUNTIME ERROR", e);
+            throw new RuntimeException("RUNTIME ERROR:could not execute", e);
         }
     }
 
@@ -103,7 +103,7 @@ public class TwitterHttpHelper implements HttpHelper {
             return executeHttpRequest(HttpMethod.GET, uri, null);
         }
         catch (OAuthException | IOException e){
-            throw new RuntimeException("RUNTIME ERROR ", e);
+            throw new RuntimeException("RUNTIME ERROR: could not execute ", e);
         }
     }
 }

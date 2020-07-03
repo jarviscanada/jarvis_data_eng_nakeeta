@@ -1,8 +1,8 @@
 package ca.jrvs.apps.grep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -48,16 +48,20 @@ public class JavaGrepImp implements JavaGrep {
 
   // list all files in a given directory and it subdirectories.
   @Override
-  public List<File> listFiles(String rootDir) {
-    List<File> files = new LinkedList<>();
-    File lsFile = new File(rootDir);
-    if(lsFile !=null ){
-      if(lsFile.isFile()){
-        files.add(lsFile);
-      }
-      else if(lsFile.isDirectory()) {
-        files.addAll(listFiles(lsFile.getAbsolutePath()));
+  public List<File> listFiles(String rootDir){
+    File root = new File(rootDir);
+    List<File> files = new ArrayList<>();
+    File[] lsFlie = root.listFiles();
 
+
+    for (File filename: lsFlie) {
+
+      if (filename.isDirectory()) {
+        List<File> subdirectoryContents = listFiles(filename.toString());
+        files.addAll(subdirectoryContents);
+      }
+      else {
+        files.add(filename);
       }
     }
     return files;
